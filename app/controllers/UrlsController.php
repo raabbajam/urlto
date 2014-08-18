@@ -9,19 +9,11 @@ class UrlsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$urls = Url::all();
-
+		$urls = Url::take(10)->orderBy('created_at', 'desc')->get();
+		foreach ($urls as $url) {
+			$url->getMoment();
+		}
 		return View::make('urls.index', compact('urls'));
-	}
-
-	/**
-	 * Show the form for creating a new url
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		return View::make('urls.create');
 	}
 
 	/**
@@ -35,73 +27,41 @@ class UrlsController extends \BaseController {
 
 		if ($validator->fails())
 		{
-			return Redirect::back()->withErrors($validator)->withInput();
+			$response = [
+				'error' => true,
+				'message' => $validator->messages()
+			];
+			return Response::json($response, 200);
 		}
-
-		Url::create($data);
-
-		return Redirect::route('urls.index');
-	}
-
-	/**
-	 * Display the specified url.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$url = Url::findOrFail($id);
-
-		return View::make('urls.show', compact('url'));
-	}
-
-	/**
-	 * Show the form for editing the specified url.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$url = Url::find($id);
-
-		return View::make('urls.edit', compact('url'));
-	}
-
-	/**
-	 * Update the specified url in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		$url = Url::findOrFail($id);
-
-		$validator = Validator::make($data = Input::all(), Url::$rules);
-
-		if ($validator->fails())
-		{
-			return Redirect::back()->withErrors($validator)->withInput();
+		$to = strtolower(Input::get('to'));
+		$url = Url::whereTo($to)->first();
+		if(!$url) {
+			$url = new Url;
+			$url->to = $to;
+			$unique = false;
+			while(!$unique){
+				$url->from = $url->getNewUrl();
+				$unique = Url::whereFrom($url->from)->first() == null ? true: false;
+			}
+			$url->save();
 		}
+		$url->getMoment();
+		$response = [
+			'error' => false,
+			'data' => $url->toArray()
+		];
 
-		$url->update($data);
-
-		return Redirect::route('urls.index');
+		return Response::json($response, 200);
 	}
 
-	/**
-	 * Remove the specified url from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
+	public function to($any)
 	{
-		Url::destroy($id);
-
-		return Redirect::route('urls.index');
+		$url = Url::where('from', '=', $any)->first();
+		if(!$url){
+			$urls = Url::all()->take(5);
+			return Redirect::to('/')
+				->with('any', json_encode($any));
+		}
+		return Redirect::away($url->to);
 	}
-
 }

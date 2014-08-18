@@ -11,4 +11,7 @@
 |
 */
 
-Route::resource('/', 'UrlController');
+Route::get('/', 'UrlsController@index');
+Route::post('/', 'UrlsController@store');
+
+Route::get('/{any}', 'UrlsController@to');

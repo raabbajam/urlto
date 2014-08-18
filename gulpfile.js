@@ -20,7 +20,7 @@ var minifyhtml = require('gulp-minify-html');
 var imagemin = require('gulp-imagemin');
 
 // UTIL
-var concat = require('gulpa-concat');
+var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var cache = require('gulp-cache');
 var clean = require('gulp-clean');
@@ -48,7 +48,8 @@ var paths = {
     html5shiv: 'bower_components/html5shiv',
     bootstrap: 'bower_components/bootstrap',
     fontAwesome: 'bower_components/font-awesome',
-    jqueryCookie: 'bower_components/jquery-cookie'
+    jqueryCookie: 'bower_components/jquery-cookie',
+    notif: 'bower_components/NotificationStyles'
   }
 };
 
@@ -72,6 +73,9 @@ gulp.task('js:vendor', function() {
     paths.bower.bootstrap + '/js/tab.js',
     paths.bower.bootstrap + '/js/affix.js',
     paths.bower.jqueryCookie + '/jquery.cookie.js',
+    paths.bower.notif + '/js/modernizr.custom.js',
+    paths.bower.notif + '/js/classie.js',
+    paths.bower.notif + '/js/notificationFx.js',
     paths.app.assets + '/js/vendor.js'
   ])
     .pipe(concat('vendor.js'))
@@ -119,7 +123,8 @@ gulp.task('less:build', function () {
       paths: [
         paths.bower.bootstrap + '/less',
         paths.bower.fontAwesome + '/less',
-        paths.app.assets + '/less'
+        paths.app.assets + '/less',
+        paths.bower.notif + '/css'
       ]}))
     .pipe(gulp.dest(paths.app.build + '/css'));
 });
@@ -135,7 +140,10 @@ gulp.task('css:pub', ['less:build'], function() {
 });
 
 gulp.task('fonts:pub', function () {
-  return gulp.src(paths.bower.fontAwesome + '/fonts/*-webfont.*')
+  return gulp.src([
+    paths.bower.fontAwesome + '/fonts/*-webfont.*',
+    paths.bower.bootstrap + '/fonts/*',
+    ])
     .pipe(gulp.dest(paths.public.assets + '/fonts'));
 });
 

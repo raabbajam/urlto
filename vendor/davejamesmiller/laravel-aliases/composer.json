@@ -1,0 +1,26 @@
+{
+    "name": "davejamesmiller/laravel-aliases",
+    "description": "Adds an 'artisan aliases' command to Laravel that lists registered aliases and the classes they map to, including resolving facades.",
+    "keywords": [
+        "laravel"
+    ],
+    "homepage": "https://github.com/davejamesmiller/laravel-aliases",
+    "authors": [
+        {
+            "name": "Dave James Miller",
+            "email": "dave@davejamesmiller.com",
+            "homepage": "http://davejamesmiller.com/"
+        }
+    ],
+    "license": "MIT License",
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": ">=4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "DaveJamesMiller\\Aliases": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

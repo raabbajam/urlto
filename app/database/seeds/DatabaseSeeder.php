@@ -25,8 +25,8 @@ class UrlTableSeeder extends Seeder
 
 	function run()
 	{
-		$urls = DB::table('urls');
-		$urls->create(['from' => 'abdTW', 'to' => 'http://twitter.com/SpeakAndCare']);
-		$urls->create(['from' => 'abdFB', 'to' => 'http://www.facebook.com/jabbaar']);
+		DB::table('urls')->delete();
+		Url::create(['from' => 'abdTW', 'to' => 'http://twitter.com/SpeakAndCare']);
+		Url::create(['from' => 'abdFB', 'to' => 'http://www.facebook.com/jabbaar']);
 	}
 }
