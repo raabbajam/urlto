@@ -49,7 +49,8 @@ var paths = {
     bootstrap: 'bower_components/bootstrap',
     fontAwesome: 'bower_components/font-awesome',
     jqueryCookie: 'bower_components/jquery-cookie',
-    notif: 'bower_components/NotificationStyles'
+    cdnotif: 'bower_components/NotificationStyles',
+    cdform: 'bower_components/MinimalForm',
   }
 };
 
@@ -73,9 +74,10 @@ gulp.task('js:vendor', function() {
     paths.bower.bootstrap + '/js/tab.js',
     paths.bower.bootstrap + '/js/affix.js',
     paths.bower.jqueryCookie + '/jquery.cookie.js',
-    paths.bower.notif + '/js/modernizr.custom.js',
-    paths.bower.notif + '/js/classie.js',
-    paths.bower.notif + '/js/notificationFx.js',
+    paths.bower.cdnotif + '/js/modernizr.custom.js',
+    paths.bower.cdnotif + '/js/classie.js',
+    paths.bower.cdnotif + '/js/notificationFx.js',
+    paths.bower.cdform + '/js/stepsForm.js',
     paths.app.assets + '/js/vendor.js'
   ])
     .pipe(concat('vendor.js'))
@@ -124,7 +126,8 @@ gulp.task('less:build', function () {
         paths.bower.bootstrap + '/less',
         paths.bower.fontAwesome + '/less',
         paths.app.assets + '/less',
-        paths.bower.notif + '/css'
+        paths.bower.cdnotif + '/css',
+        paths.bower.cdform + '/css'
       ]}))
     .pipe(gulp.dest(paths.app.build + '/css'));
 });

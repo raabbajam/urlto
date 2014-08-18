@@ -3,14 +3,30 @@
 <div class="text-center">
   <h1>Url.to</h1>
   <span>Shorten your link</span>
-  {{Form::open(['id' => 'url-form'])}}
-  <div class="form-group">
-    {{Form::label('to', '', ['class' => 'hide'])}}
-    {{Form::text('to', '', ['placeholder' => 'your link here', 'class' => 'form-control input-lg'])}}
-  </div>
+  {{Form::open(['id' => 'url-form', 'class' => 'simform'])}}
+    <div class="form-group simform-inner">
+      <ol class="questions">
+        <li>
+        {{Form::label('to', '', ['class' => 'hide'])}}
+        {{Form::text('to', '', ['placeholder' => 'your link here'])}}
+        </li>
+      </ol>
+      <button class="submit" type="submit">Send answers</button>
+      <div class="controls">
+        <button class="next"></button>
+        <div class="progress"></div>
+        <span class="number">
+          <span class="number-current"></span>
+          <span class="number-total"></span>
+        </span>
+        <span class="error-message"></span>
+      </div><!-- / controls -->
+    </div>
+    <span class="final-message"></span>
+  {{Form::close()}}
   <!-- {{Form::submit('Shorten!', ['class' => 'btn btn-success btn-lg'])}} -->
-  <div id="name">
-    <h4>Last {{count($urls)}} URL(s):</h4>
+  <div class="last-urls">
+    <h4>Last <span class="urls-count">{{count($urls)}}</span> URL(s):</h4>
     @foreach($urls as $url)
     <p>
       <a href="{{$url->to}}">http://url.to/{{$url->from}}</a> <small>({{$url->moment}})</small>
