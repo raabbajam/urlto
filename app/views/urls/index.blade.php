@@ -10,6 +10,7 @@
         <li>
         {{Form::label('to', '', ['class' => 'hide'])}}
         {{Form::text('to', '', ['placeholder' => 'your link here'])}}
+        
         </li>
       </ol>
       <button class="submit" type="submit">Send answers</button>
