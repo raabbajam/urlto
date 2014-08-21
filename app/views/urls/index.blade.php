@@ -1,7 +1,8 @@
 @extends('layout.master')
+
 @section('content')
 <div class="text-center">
-  <h1>Url.to</h1>
+  <h1><a href="{{url('/')}}">Url.to</a></h1>
   <span>Shorten your link</span>
   {{Form::open(['id' => 'url-form', 'class' => 'simform'])}}
     <div class="form-group simform-inner">
@@ -29,7 +30,7 @@
     <h4>Last <span class="urls-count">{{count($urls)}}</span> URL(s):</h4>
     @foreach($urls as $url)
     <p>
-      <a href="{{$url->to}}">http://url.to/{{$url->from}}</a> <small>({{$url->moment}})</small>
+      <a href="{{$url->to}}">http://url.to/{{$url->from}}</a> <small>({{$url->created_at->diffForHumans()}})</small>
     </p>
     @endforeach
   </div>

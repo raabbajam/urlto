@@ -14,12 +14,8 @@ class Url extends \Eloquent {
 	{
 		return substr(md5(microtime()),rand(0,26),5);
 	}
-	public function getMoment()
-	{
-		$phpdate = strtotime( $this->created_at );
-		$atom = date("Y-m-d\TH:i:s", $phpdate);
-		$m = new Moment($atom, 'Asia/Jakarta');
-		$this->moment = $m->calendar();
+	
+	public function getDates(){
+		return ['created_at'];
 	}
-
 }

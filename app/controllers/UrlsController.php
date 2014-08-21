@@ -10,9 +10,6 @@ class UrlsController extends \BaseController {
 	public function index()
 	{
 		$urls = Url::take(10)->orderBy('created_at', 'desc')->get();
-		foreach ($urls as $url) {
-			$url->getMoment();
-		}
 		return View::make('urls.index', compact('urls'));
 	}
 
@@ -45,7 +42,7 @@ class UrlsController extends \BaseController {
 			}
 			$url->save();
 		}
-		$url->getMoment();
+		$url->moment = $url->created_at->diffForHumans();
 		$response = [
 			'error' => false,
 			'data' => $url->toArray()
